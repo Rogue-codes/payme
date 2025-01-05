@@ -31,6 +31,7 @@ export class AuthService {
     // Create JWT payload based on user type
     const jwtPayload = {
       email: user.email,
+      id: user.id,
     };
 
     // Sign and return JWT token
@@ -59,8 +60,9 @@ export class AuthService {
 
   async generateNewAccessToken(user: any) {
     // Create JWT payload based on user type
-    const jwtPayload = {
+  const jwtPayload = {
       email: user.email,
+      id: user.id,
     };
 
     // Sign and return JWT token

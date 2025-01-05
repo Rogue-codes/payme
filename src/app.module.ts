@@ -12,6 +12,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { BalanceModule } from './balance/balance.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -47,8 +48,9 @@ import { JwtModule } from '@nestjs/jwt';
     EmailModule,
     BalanceModule,
     AuthModule,
+    PaymentModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController,],
+  providers: [AppService,],
 })
 export class AppModule {}
