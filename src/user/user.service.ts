@@ -104,29 +104,30 @@ export class UserService {
     return 'Email verified successfully. Proceed to create your account.';
   }
 
-  async saveRefreshToken (email:string, token:string) {
+  async saveRefreshToken(email: string, token: string) {
     const user = await this.userRepository.findOne({
-      where:{
-        email
-      }
-    })
+      where: {
+        email,
+      },
+    });
 
-    if(!user){
-      throw new NotFoundException()
+    if (!user) {
+      throw new NotFoundException();
     }
 
-    user.refreshToken = await bcrypt.hash(token,10);
+    user.refreshToken = token;
+
     await this.userRepository.save(user);
   }
 
-  async isRefreshTokenValid (email:string,token:string){
+  async isRefreshTokenValid(email: string, token: string) {
     const user = await this.userRepository.findOne({
-      where:{
-        email
-      }
-    })
-
-    return await bcrypt.compare(token, user.refreshToken)
+      where: {
+        email,
+      },
+    });
+    const isValid = token === user.refreshToken;
+    return isValid;
   }
 
   async resendOtp(email: string): Promise<string> {
@@ -238,18 +239,19 @@ export class UserService {
     return newUser;
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async getAccountBalance(id:number) {
+    const balance = await this.balanceService.getBalance(id);
+    return balance
   }
 
   async findOne(email: string) {
     const user = await this.userRepository.findOne({
-      where:{
-        email
-      }
-    })
+      where: {
+        email,
+      },
+    });
 
-    return user
+    return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
